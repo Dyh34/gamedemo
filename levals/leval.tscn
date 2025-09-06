@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://rhahna212w6j"]
+
+[ext_resource type="Texture2D" uid="uid://bjbm8b350pvm7" path="res://icon.svg" id="1_yqhak"]
+[ext_resource type="Script" uid="uid://bnuhyxwd42chj" path="res://levals/csg_mesh_3d.gd" id="2_82w3h"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ak84c"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i8ctr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7cjn"]
+albedo_color = Color(1, 0.239216, 0.219608, 1)
+albedo_texture = ExtResource("1_yqhak")
+metallic = 0.52
+metallic_specular = 0.75
+
+[node name="leval" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50953, -5.38873)
+mesh = SubResource("BoxMesh_ak84c")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(0.976672, 0.0900712, -0.194932, 0, 0.907777, 0.419452, 0.214735, -0.409667, 0.886601, 0, 1.61597, -3.05949)
+mesh = SubResource("CapsuleMesh_i8ctr")
+material = SubResource("StandardMaterial3D_j7cjn")
+script = ExtResource("2_82w3h")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49181, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.60943, -0.552616)
+light_color = Color(1, 1, 0.462745, 1)
+light_energy = 7.949
