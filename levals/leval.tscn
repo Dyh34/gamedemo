@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://rhahna212w6j"]
+[gd_scene load_steps=13 format=3 uid="uid://rhahna212w6j"]
 
 [ext_resource type="Texture2D" uid="uid://bjbm8b350pvm7" path="res://icon.svg" id="1_yqhak"]
 [ext_resource type="Script" uid="uid://bnuhyxwd42chj" path="res://levals/csg_mesh_3d.gd" id="2_82w3h"]
+[ext_resource type="PackedScene" uid="uid://q1ikbgummi4v" path="res://levals/player/player.tscn" id="3_82w3h"]
+[ext_resource type="Script" uid="uid://ca72tlopm2ifv" path="res://levals/player/player.gd" id="4_ak84c"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ak84c"]
 
@@ -12,6 +14,25 @@ albedo_color = Color(1, 0.239216, 0.219608, 1)
 albedo_texture = ExtResource("1_yqhak")
 metallic = 0.52
 metallic_specular = 0.75
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ak84c"]
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_82w3h"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ak84c"]
+sky_top_color = Color(0.25098, 0.694118, 0.780392, 1)
+sky_horizon_color = Color(0.949059, 1.04691, 1.05348, 1)
+ground_bottom_color = Color(0.386619, 0.334882, 0.274891, 1)
+ground_horizon_color = Color(0.949059, 1.04691, 1.05348, 1)
+
+[sub_resource type="Sky" id="Sky_i8ctr"]
+sky_material = SubResource("ProceduralSkyMaterial_ak84c")
+
+[sub_resource type="Environment" id="Environment_j7cjn"]
+background_mode = 2
+sky = SubResource("Sky_i8ctr")
+tonemap_mode = 2
+glow_enabled = true
 
 [node name="leval" type="Node3D"]
 
@@ -26,9 +47,34 @@ material = SubResource("StandardMaterial3D_j7cjn")
 script = ExtResource("2_82w3h")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49181, 0)
+transform = Transform3D(1, 0, 0, 0, 0.974582, 0.224033, 0, -0.224033, 0.974582, 0, 3.22158, 6.63323)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.60943, -0.552616)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.08507, -4.05965)
 light_color = Color(1, 1, 0.462745, 1)
 light_energy = 7.949
+omni_range = 10.5161
+
+[node name="entities" type="Node3D" parent="."]
+
+[node name="player" parent="entities" instance=ExtResource("3_82w3h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.842771)
+script = ExtResource("4_ak84c")
+
+[node name="enviroment" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="enviroment"]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="enviroment/StaticBody3D"]
+transform = Transform3D(10.42, 0, 0, 0, 10.42, 0, 0, 0, 10.42, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ak84c")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="enviroment/StaticBody3D"]
+transform = Transform3D(20.845, 0, 0, 0, 20.845, 0, 0, 0, 20.845, 0, 0, 0)
+shape = SubResource("HeightMapShape3D_82w3h")
+
+[node name="world" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="world"]
+environment = SubResource("Environment_j7cjn")

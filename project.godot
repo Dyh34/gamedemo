@@ -14,3 +14,7 @@ config/name="新建游戏项目111"
 run/main_scene="uid://rhahna212w6j"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2
